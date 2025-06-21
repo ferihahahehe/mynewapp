@@ -5,7 +5,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/widgets/empty_devices/empty_devices_widget.dart';
-import '/widgets/strength_indicator/strength_indicator_widget.dart';
 import 'dart:math';
 import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
@@ -440,43 +439,6 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                             ),
                                                                       ),
                                                                     ),
-                                                                    wrapWithModel(
-                                                                      model: _model
-                                                                          .strengthIndicatorModels1
-                                                                          .getModel(
-                                                                        _model
-                                                                            .connectedRSSI!,
-                                                                        displayConnectedDevicesIndex,
-                                                                      ),
-                                                                      updateCallback:
-                                                                          () =>
-                                                                              safeSetState(() {}),
-                                                                      child:
-                                                                          StrengthIndicatorWidget(
-                                                                        key:
-                                                                            Key(
-                                                                          'Keywn3_${_model.connectedRSSI!}',
-                                                                        ),
-                                                                        rssi: displayConnectedDevicesItem
-                                                                            .rssi,
-                                                                        color: valueOrDefault<
-                                                                            Color>(
-                                                                          () {
-                                                                            if (displayConnectedDevicesItem.rssi >=
-                                                                                -67) {
-                                                                              return FlutterFlowTheme.of(context).success;
-                                                                            } else if (displayConnectedDevicesItem.rssi >=
-                                                                                -90) {
-                                                                              return FlutterFlowTheme.of(context).warning;
-                                                                            } else {
-                                                                              return FlutterFlowTheme.of(context).error;
-                                                                            }
-                                                                          }(),
-                                                                          FlutterFlowTheme.of(context)
-                                                                              .success,
-                                                                        ),
-                                                                      ),
-                                                                    ),
                                                                   ],
                                                                 ),
                                                                 Padding(
@@ -859,40 +821,6 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                                 fontWeight: FlutterFlowTheme.of(context).bodyLarge.fontWeight,
                                                                                 fontStyle: FlutterFlowTheme.of(context).bodyLarge.fontStyle,
                                                                               ),
-                                                                        ),
-                                                                      ),
-                                                                      wrapWithModel(
-                                                                        model: _model
-                                                                            .strengthIndicatorModels2
-                                                                            .getModel(
-                                                                          _model
-                                                                              .foundedRSSI!,
-                                                                          displayDevicesIndex,
-                                                                        ),
-                                                                        updateCallback:
-                                                                            () =>
-                                                                                safeSetState(() {}),
-                                                                        child:
-                                                                            StrengthIndicatorWidget(
-                                                                          key:
-                                                                              Key(
-                                                                            'Keybdj_${_model.foundedRSSI!}',
-                                                                          ),
-                                                                          rssi:
-                                                                              displayDevicesItem.rssi,
-                                                                          color:
-                                                                              valueOrDefault<Color>(
-                                                                            () {
-                                                                              if (displayDevicesItem.rssi >= -67) {
-                                                                                return FlutterFlowTheme.of(context).success;
-                                                                              } else if (displayDevicesItem.rssi >= -90) {
-                                                                                return FlutterFlowTheme.of(context).warning;
-                                                                              } else {
-                                                                                return FlutterFlowTheme.of(context).error;
-                                                                              }
-                                                                            }(),
-                                                                            FlutterFlowTheme.of(context).success,
-                                                                          ),
                                                                         ),
                                                                       ),
                                                                     ],
