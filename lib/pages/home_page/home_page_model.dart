@@ -19,6 +19,8 @@ import 'package:provider/provider.dart';
 class HomePageModel extends FlutterFlowModel<HomePageWidget> {
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Custom Action - isBluetoothEnabled] action in HomePage widget.
+  bool? isBtEnabledHome;
   // Stores action output result for [Custom Action - getConnectedDevices] action in HomePage widget.
   List<BTDeviceStruct>? getConnectedDevicesOutputCopy;
   // Stores action output result for [Custom Action - findDevices] action in HomePage widget.

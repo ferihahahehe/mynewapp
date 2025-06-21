@@ -42,8 +42,10 @@ class _HomePageWidgetState extends State<HomePageWidget>
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.isBtEnabledHome = await actions.isBluetoothEnabled();
       FFAppState().isFetchingConnectedDevices = true;
       FFAppState().isFetchingDevices = true;
+      FFAppState().isBluetoothEnabled = _model.isBtEnabledHome!;
       safeSetState(() {});
       _model.getConnectedDevicesOutputCopy =
           await actions.getConnectedDevices();
@@ -58,7 +60,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
       safeSetState(() {});
     });
 
-    _model.switchValue = FFAppState().isBluetoothEnabled;
+    _model.switchValue = false;
     animationsMap.addAll({
       'textOnPageLoadAnimation1': AnimationInfo(
         loop: true,
