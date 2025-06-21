@@ -67,12 +67,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
             name: DevicePageWidget.routeName,
             path: DevicePageWidget.routePath,
-            builder: (context, params) => params.isEmpty
-                ? NavBarPage(initialPage: 'DevicePage')
-                : NavBarPage(
-                    initialPage: 'DevicePage',
-                    page: DevicePageWidget(),
-                  )),
+            builder: (context, params) => NavBarPage(
+                  initialPage: '',
+                  page: DevicePageWidget(),
+                )),
         FFRoute(
             name: DashboardWidget.routeName,
             path: DashboardWidget.routePath,

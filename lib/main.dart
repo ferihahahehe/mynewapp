@@ -125,7 +125,6 @@ class _NavBarPageState extends State<NavBarPage> {
     final tabs = {
       'Dashboard': DashboardWidget(),
       'HomePage': HomePageWidget(),
-      'DevicePage': DevicePageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -161,14 +160,14 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  Icons.home_rounded,
+                  Icons.bubble_chart,
                   color: currentIndex == 0
                       ? FlutterFlowTheme.of(context).primary
                       : Color(0x8A000000),
                   size: 24.0,
                 ),
                 Text(
-                  'Home',
+                  'Dashboard',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 0
@@ -192,34 +191,10 @@ class _NavBarPageState extends State<NavBarPage> {
                   size: 24.0,
                 ),
                 Text(
-                  'Home',
+                  'BLE Settings',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 1
-                        ? FlutterFlowTheme.of(context).primary
-                        : Color(0x8A000000),
-                    fontSize: 11.0,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          FloatingNavbarItem(
-            customWidget: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.bluetooth_rounded,
-                  color: currentIndex == 2
-                      ? FlutterFlowTheme.of(context).primary
-                      : Color(0x8A000000),
-                  size: 24.0,
-                ),
-                Text(
-                  'Home',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: currentIndex == 2
                         ? FlutterFlowTheme.of(context).primary
                         : Color(0x8A000000),
                     fontSize: 11.0,

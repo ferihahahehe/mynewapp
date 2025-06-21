@@ -1,4 +1,3 @@
-import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -257,43 +256,17 @@ class _DevicePageWidgetState extends State<DevicePageWidget> {
                                   child: Align(
                                     alignment: AlignmentDirectional(1.0, 0.0),
                                     child: FlutterFlowIconButton(
-                                      borderColor: Colors.transparent,
+                                      borderColor: FlutterFlowTheme.of(context)
+                                          .alternate,
                                       borderRadius: 20.0,
                                       buttonSize: 45.0,
                                       icon: Icon(
-                                        Icons.bluetooth_disabled_rounded,
-                                        color:
-                                            FlutterFlowTheme.of(context).error,
+                                        Icons.settings_bluetooth_rounded,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
                                         size: 28.0,
                                       ),
                                       onPressed: () async {
-                                        await actions.disconnectDevice(
-                                          FFAppState().currentDevice,
-                                        );
-                                        FFAppState().currentDevice = BTDeviceStruct
-                                            .fromSerializableMap(jsonDecode(
-                                                '{\"name\":\"No Device Connected\",\"id\":\"\"}'));
-                                        FFAppState().isDeviceConnected = false;
-                                        safeSetState(() {});
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          SnackBar(
-                                            content: Text(
-                                              'Device Disconnected!',
-                                              style: TextStyle(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                              ),
-                                            ),
-                                            duration:
-                                                Duration(milliseconds: 2000),
-                                            backgroundColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .alternate,
-                                          ),
-                                        );
-
                                         context.pushNamed(
                                             HomePageWidget.routeName);
                                       },

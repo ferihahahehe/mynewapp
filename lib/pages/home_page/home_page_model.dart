@@ -1,6 +1,5 @@
 import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -20,6 +19,12 @@ import 'package:provider/provider.dart';
 class HomePageModel extends FlutterFlowModel<HomePageWidget> {
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Custom Action - getConnectedDevices] action in HomePage widget.
+  List<BTDeviceStruct>? getConnectedDevicesOutputCopy;
+  // Stores action output result for [Custom Action - findDevices] action in HomePage widget.
+  List<BTDeviceStruct>? findDevicesOutputCopy;
+  // State field(s) for Switch widget.
+  bool? switchValue;
   // Stores action output result for [Custom Action - getConnectedDevices] action in Icon widget.
   List<BTDeviceStruct>? getConnectedDevicesOutput;
   // Stores action output result for [Custom Action - findDevices] action in Icon widget.

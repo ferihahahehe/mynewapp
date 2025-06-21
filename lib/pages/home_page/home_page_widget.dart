@@ -1,6 +1,5 @@
 import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -41,6 +40,25 @@ class _HomePageWidgetState extends State<HomePageWidget>
     super.initState();
     _model = createModel(context, () => HomePageModel());
 
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      FFAppState().isFetchingConnectedDevices = true;
+      FFAppState().isFetchingDevices = true;
+      safeSetState(() {});
+      _model.getConnectedDevicesOutputCopy =
+          await actions.getConnectedDevices();
+      FFAppState().ConnectedDevices =
+          _model.getConnectedDevicesOutputCopy!.toList().cast<BTDeviceStruct>();
+      FFAppState().isFetchingConnectedDevices = false;
+      safeSetState(() {});
+      _model.findDevicesOutputCopy = await actions.findDevices();
+      FFAppState().isFetchingDevices = false;
+      FFAppState().foundDevices =
+          _model.findDevicesOutputCopy!.toList().cast<BTDeviceStruct>();
+      safeSetState(() {});
+    });
+
+    _model.switchValue = FFAppState().isBluetoothEnabled;
     animationsMap.addAll({
       'textOnPageLoadAnimation1': AnimationInfo(
         loop: true,
@@ -200,20 +218,43 @@ class _HomePageWidgetState extends State<HomePageWidget>
                             ),
                       ),
                     ),
-                  FlutterFlowIconButton(
-                    borderColor: FlutterFlowTheme.of(context).primary,
-                    borderRadius: 20.0,
-                    borderWidth: 1.0,
-                    buttonSize: 40.0,
-                    fillColor: FlutterFlowTheme.of(context).accent1,
-                    icon: Icon(
-                      Icons.refresh_rounded,
-                      color: FlutterFlowTheme.of(context).primaryText,
-                      size: 24.0,
-                    ),
-                    onPressed: () async {
-                      context.goNamed(SplashPageWidget.routeName);
+                  Switch.adaptive(
+                    value: _model.switchValue!,
+                    onChanged: (newValue) async {
+                      safeSetState(() => _model.switchValue = newValue!);
+                      if (newValue!) {
+                        context.pushNamed(SplashPageWidget.routeName);
+                      } else {
+                        await actions.disconnectDevice(
+                          FFAppState().currentDevice,
+                        );
+                        FFAppState().currentDevice =
+                            BTDeviceStruct.fromSerializableMap(jsonDecode(
+                                '{\"name\":\"No Device Connected\",\"id\":\"\"}'));
+                        FFAppState().isDeviceConnected = false;
+                        safeSetState(() {});
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Device Disconnected!',
+                              style: TextStyle(
+                                color: FlutterFlowTheme.of(context).primaryText,
+                              ),
+                            ),
+                            duration: Duration(milliseconds: 2000),
+                            backgroundColor:
+                                FlutterFlowTheme.of(context).alternate,
+                          ),
+                        );
+
+                        context.pushNamed(HomePageWidget.routeName);
+                      }
                     },
+                    activeColor: FlutterFlowTheme.of(context).primary,
+                    activeTrackColor: FlutterFlowTheme.of(context).primary,
+                    inactiveTrackColor: FlutterFlowTheme.of(context).alternate,
+                    inactiveThumbColor:
+                        FlutterFlowTheme.of(context).secondaryBackground,
                   ),
                 ],
               ),
