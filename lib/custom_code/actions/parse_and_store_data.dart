@@ -43,6 +43,7 @@ Future<void> parseAndStoreData(String rawData) async {
     }
 
     // Update status real-time
+    FFAppState().currentActivityName = activityName;
     FFAppState().currentCondition = (conditionCode == 1);
     FFAppState().currentFlexAngle = angle;
 

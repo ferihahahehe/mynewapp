@@ -1,10 +1,13 @@
 import '/flutter_flow/flutter_flow_charts.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_toggle_icon.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/instant_timer.dart';
+import '/widgets/current_activity/current_activity_widget.dart';
+import '/widgets/current_posture/current_posture_widget.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +33,18 @@ class _DashboardWidgetState extends State<DashboardWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => DashboardModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.instantTimer = InstantTimer.periodic(
+        duration: Duration(milliseconds: 1000),
+        callback: (timer) async {
+          FFAppState().isDeviceConnected = FFAppState().isDeviceConnected;
+          safeSetState(() {});
+        },
+        startImmediately: true,
+      );
+    });
   }
 
   @override
@@ -158,134 +173,10 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                           .fontStyle,
                                     ),
                           ),
-                          Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 4.0,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  offset: Offset(
-                                    0.0,
-                                    2.0,
-                                  ),
-                                )
-                              ],
-                              borderRadius: BorderRadius.circular(12.0),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(12.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Container(
-                                    width: 48.0,
-                                    height: 48.0,
-                                    decoration: BoxDecoration(
-                                      color: Color(0xFFFFD600),
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: ToggleIcon(
-                                      onPressed: () async {
-                                        safeSetState(() =>
-                                            FFAppState().currentCondition =
-                                                !FFAppState().currentCondition);
-                                      },
-                                      value: FFAppState().currentCondition,
-                                      onIcon: Icon(
-                                        Icons.sentiment_very_satisfied,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        size: 32.0,
-                                      ),
-                                      offIcon: Icon(
-                                        Icons
-                                            .sentiment_very_dissatisfied_rounded,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        size: 32.0,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 0.0, 16.0, 0.0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          () {
-                                            if (FFAppState().currentCondition) {
-                                              return 'GOOD';
-                                            } else if (!FFAppState()
-                                                .currentCondition) {
-                                              return 'BAD';
-                                            } else {
-                                              return 'Waiting';
-                                            }
-                                          }(),
-                                          style: FlutterFlowTheme.of(context)
-                                              .headlineSmall
-                                              .override(
-                                                font: GoogleFonts.roboto(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .headlineSmall
-                                                          .fontStyle,
-                                                ),
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                                fontSize: 22.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.bold,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .headlineSmall
-                                                        .fontStyle,
-                                              ),
-                                        ),
-                                        Text(
-                                          'Flex agle: ${FFAppState().currentFlexAngle.toString()}°',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                font: GoogleFonts.roboto(
-                                                  fontWeight:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontWeight,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontStyle,
-                                                ),
-                                                color: Color(0xFF444F5B),
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontWeight,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
-                                              ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                          wrapWithModel(
+                            model: _model.currentPostureModel,
+                            updateCallback: () => safeSetState(() {}),
+                            child: CurrentPostureWidget(),
                           ),
                           Text(
                             'Current Activity',
@@ -304,70 +195,10 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                           .fontStyle,
                                     ),
                           ),
-                          Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 4.0,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  offset: Offset(
-                                    0.0,
-                                    2.0,
-                                  ),
-                                )
-                              ],
-                              borderRadius: BorderRadius.circular(12.0),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(12.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Container(
-                                    width: 48.0,
-                                    height: 48.0,
-                                    decoration: BoxDecoration(
-                                      color: Color(0xFFFFD600),
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Icon(
-                                      Icons.directions_walk,
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      size: 32.0,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        14.0, 0.0, 12.0, 0.0),
-                                    child: Text(
-                                      'Walking',
-                                      style: FlutterFlowTheme.of(context)
-                                          .titleMedium
-                                          .override(
-                                            font: GoogleFonts.roboto(
-                                              fontWeight: FontWeight.bold,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .titleMedium
-                                                      .fontStyle,
-                                            ),
-                                            color: Color(0xFF1A2A3A),
-                                            fontSize: 22.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.bold,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleMedium
-                                                    .fontStyle,
-                                          ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                          wrapWithModel(
+                            model: _model.currentActivityModel,
+                            updateCallback: () => safeSetState(() {}),
+                            child: CurrentActivityWidget(),
                           ),
                           Text(
                             'Activity Chart',
@@ -393,7 +224,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                               boxShadow: [
                                 BoxShadow(
                                   blurRadius: 4.0,
-                                  color: Color(0x1A000000),
+                                  color: FlutterFlowTheme.of(context).accent2,
                                   offset: Offset(
                                     0.0,
                                     2.0,
@@ -415,7 +246,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                     ),
                                     child: Container(
                                       width: 370.0,
-                                      height: 230.0,
+                                      height: 255.9,
                                       child: FlutterFlowBarChart(
                                         barData: [
                                           FFBarChartData(
@@ -449,15 +280,70 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                         chartStylingInfo: ChartStylingInfo(
                                           backgroundColor:
                                               FlutterFlowTheme.of(context)
-                                                  .secondaryBackground,
+                                                  .primaryBackground,
                                           showBorder: false,
                                         ),
-                                        axisBounds: AxisBounds(),
+                                        axisBounds: AxisBounds(
+                                          maxY: 12.0,
+                                        ),
                                         xAxisLabelInfo: AxisLabelInfo(
+                                          showLabels: true,
+                                          labelTextStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .labelSmall
+                                              .override(
+                                                font: GoogleFonts.roboto(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .labelSmall
+                                                          .fontStyle,
+                                                ),
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.bold,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelSmall
+                                                        .fontStyle,
+                                              ),
+                                          labelInterval: 10.0,
                                           reservedSize: 28.0,
                                         ),
                                         yAxisLabelInfo: AxisLabelInfo(
-                                          reservedSize: 42.0,
+                                          showLabels: true,
+                                          labelTextStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .labelSmall
+                                              .override(
+                                                font: GoogleFonts.roboto(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .labelSmall
+                                                          .fontStyle,
+                                                ),
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.bold,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelSmall
+                                                        .fontStyle,
+                                              ),
+                                          labelInterval: 1.0,
+                                          labelFormatter: LabelFormatter(
+                                            numberFormat: (val) => formatNumber(
+                                              val,
+                                              formatType: FormatType.decimal,
+                                              decimalType:
+                                                  DecimalType.periodDecimal,
+                                            ),
+                                          ),
+                                          reservedSize: 20.0,
                                         ),
                                       ),
                                     ),

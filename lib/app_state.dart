@@ -70,6 +70,30 @@ class FFAppState extends ChangeNotifier {
           _postureLogs;
     });
     _safeInit(() {
+      _globalActivityDurations = prefs
+              .getStringList('ff_globalActivityDurations')
+              ?.map((x) {
+                try {
+                  return ActivityDurationStruct.fromSerializableMap(
+                      jsonDecode(x));
+                } catch (e) {
+                  print("Can't decode persisted data type. Error: $e.");
+                  return null;
+                }
+              })
+              .withoutNulls
+              .toList() ??
+          _globalActivityDurations;
+    });
+    _safeInit(() {
+      _currentFlexAngle =
+          prefs.getInt('ff_currentFlexAngle') ?? _currentFlexAngle;
+    });
+    _safeInit(() {
+      _currentCondition =
+          prefs.getBool('ff_currentCondition') ?? _currentCondition;
+    });
+    _safeInit(() {
       _historicalSummaries = prefs
               .getStringList('ff_historicalSummaries')
               ?.map((x) {
@@ -88,6 +112,10 @@ class FFAppState extends ChangeNotifier {
     _safeInit(() {
       _lastProcessingDate =
           prefs.getString('ff_lastProcessingDate') ?? _lastProcessingDate;
+    });
+    _safeInit(() {
+      _currentActivityName =
+          prefs.getString('ff_currentActivityName') ?? _currentActivityName;
     });
   }
 
@@ -295,18 +323,26 @@ class FFAppState extends ChangeNotifier {
       _globalActivityDurations;
   set globalActivityDurations(List<ActivityDurationStruct> value) {
     _globalActivityDurations = value;
+    prefs.setStringList(
+        'ff_globalActivityDurations', value.map((x) => x.serialize()).toList());
   }
 
   void addToGlobalActivityDurations(ActivityDurationStruct value) {
     globalActivityDurations.add(value);
+    prefs.setStringList('ff_globalActivityDurations',
+        _globalActivityDurations.map((x) => x.serialize()).toList());
   }
 
   void removeFromGlobalActivityDurations(ActivityDurationStruct value) {
     globalActivityDurations.remove(value);
+    prefs.setStringList('ff_globalActivityDurations',
+        _globalActivityDurations.map((x) => x.serialize()).toList());
   }
 
   void removeAtIndexFromGlobalActivityDurations(int index) {
     globalActivityDurations.removeAt(index);
+    prefs.setStringList('ff_globalActivityDurations',
+        _globalActivityDurations.map((x) => x.serialize()).toList());
   }
 
   void updateGlobalActivityDurationsAtIndex(
@@ -314,23 +350,29 @@ class FFAppState extends ChangeNotifier {
     ActivityDurationStruct Function(ActivityDurationStruct) updateFn,
   ) {
     globalActivityDurations[index] = updateFn(_globalActivityDurations[index]);
+    prefs.setStringList('ff_globalActivityDurations',
+        _globalActivityDurations.map((x) => x.serialize()).toList());
   }
 
   void insertAtIndexInGlobalActivityDurations(
       int index, ActivityDurationStruct value) {
     globalActivityDurations.insert(index, value);
+    prefs.setStringList('ff_globalActivityDurations',
+        _globalActivityDurations.map((x) => x.serialize()).toList());
   }
 
   int _currentFlexAngle = 0;
   int get currentFlexAngle => _currentFlexAngle;
   set currentFlexAngle(int value) {
     _currentFlexAngle = value;
+    prefs.setInt('ff_currentFlexAngle', value);
   }
 
   bool _currentCondition = false;
   bool get currentCondition => _currentCondition;
   set currentCondition(bool value) {
     _currentCondition = value;
+    prefs.setBool('ff_currentCondition', value);
   }
 
   List<DailyActivitySummaryStruct> _historicalSummaries = [];
@@ -381,6 +423,13 @@ class FFAppState extends ChangeNotifier {
   set lastProcessingDate(String value) {
     _lastProcessingDate = value;
     prefs.setString('ff_lastProcessingDate', value);
+  }
+
+  String _currentActivityName = 'Unknown';
+  String get currentActivityName => _currentActivityName;
+  set currentActivityName(String value) {
+    _currentActivityName = value;
+    prefs.setString('ff_currentActivityName', value);
   }
 }
 
