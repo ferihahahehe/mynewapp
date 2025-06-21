@@ -9,7 +9,6 @@ import '/widgets/strength_indicator/strength_indicator_widget.dart';
 import 'dart:math';
 import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
-import '/flutter_flow/permissions_util.dart';
 import '/index.dart';
 import 'home_page_widget.dart' show HomePageWidget;
 import 'package:flutter/material.dart';
@@ -28,18 +27,6 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
 
   ///  State fields for stateful widgets in this page.
 
-  // Stores action output result for [Custom Action - isBluetoothEnabled] action in HomePage widget.
-  bool? isBluetoothEnabledOutput;
-  // Stores action output result for [Custom Action - getConnectedDevices] action in HomePage widget.
-  List<BTDeviceStruct>? getConnectedDevicesOutput1;
-  // Stores action output result for [Custom Action - findDevices] action in HomePage widget.
-  List<BTDeviceStruct>? findDevicesOutput1;
-  // Stores action output result for [Custom Action - requestBluetoothOn] action in HomePage widget.
-  bool? requestBluetoothOnOutput;
-  // Stores action output result for [Custom Action - getConnectedDevices] action in HomePage widget.
-  List<BTDeviceStruct>? getConnectedDevicesOutputCopy;
-  // Stores action output result for [Custom Action - findDevices] action in HomePage widget.
-  List<BTDeviceStruct>? findDevicesOutputCopy;
   // Models for StrengthIndicator dynamic component.
   late FlutterFlowDynamicModels<StrengthIndicatorModel>
       strengthIndicatorModels1;

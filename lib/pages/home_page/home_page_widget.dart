@@ -9,7 +9,6 @@ import '/widgets/strength_indicator/strength_indicator_widget.dart';
 import 'dart:math';
 import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
-import '/flutter_flow/permissions_util.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -42,49 +41,6 @@ class _HomePageWidgetState extends State<HomePageWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => HomePageModel());
-
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.isBluetoothEnabledOutput = await actions.isBluetoothEnabled();
-      FFAppState().isBluetoothEnabled = _model.isBluetoothEnabledOutput!;
-      safeSetState(() {});
-      if (FFAppState().isBluetoothEnabled) {
-        await requestPermission(bluetoothPermission);
-        FFAppState().isFetchingConnectedDevices = true;
-        FFAppState().isFetchingDevices = true;
-        safeSetState(() {});
-        _model.getConnectedDevicesOutput1 = await actions.getConnectedDevices();
-        FFAppState().ConnectedDevices =
-            _model.getConnectedDevicesOutput1!.toList().cast<BTDeviceStruct>();
-        FFAppState().isFetchingConnectedDevices = false;
-        safeSetState(() {});
-        _model.findDevicesOutput1 = await actions.findDevices();
-        FFAppState().isFetchingDevices = false;
-        FFAppState().foundDevices =
-            _model.findDevicesOutput1!.toList().cast<BTDeviceStruct>();
-        safeSetState(() {});
-      } else {
-        _model.requestBluetoothOnOutput = await actions.requestBluetoothOn();
-        await requestPermission(bluetoothPermission);
-        FFAppState().isFetchingConnectedDevices = true;
-        FFAppState().isFetchingDevices = true;
-        safeSetState(() {});
-        _model.getConnectedDevicesOutputCopy =
-            await actions.getConnectedDevices();
-        FFAppState().ConnectedDevices = _model.getConnectedDevicesOutputCopy!
-            .toList()
-            .cast<BTDeviceStruct>();
-        FFAppState().isFetchingConnectedDevices = false;
-        safeSetState(() {});
-        _model.findDevicesOutputCopy = await actions.findDevices();
-        FFAppState().isFetchingDevices = false;
-        FFAppState().foundDevices =
-            _model.findDevicesOutputCopy!.toList().cast<BTDeviceStruct>();
-        safeSetState(() {});
-      }
-
-      context.pushNamed(HomePageWidget.routeName);
-    });
 
     animationsMap.addAll({
       'textOnPageLoadAnimation1': AnimationInfo(

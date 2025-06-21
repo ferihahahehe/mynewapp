@@ -1,8 +1,11 @@
+import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
+import '/flutter_flow/permissions_util.dart';
+import '/index.dart';
 import 'splash_page_widget.dart' show SplashPageWidget;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -15,6 +18,16 @@ class SplashPageModel extends FlutterFlowModel<SplashPageWidget> {
 
   // Stores action output result for [Custom Action - isBluetoothEnabled] action in SplashPage widget.
   bool? isBluetoothEnabledOutput;
+  // Stores action output result for [Custom Action - getConnectedDevices] action in SplashPage widget.
+  List<BTDeviceStruct>? getConnectedDevicesOutput1;
+  // Stores action output result for [Custom Action - findDevices] action in SplashPage widget.
+  List<BTDeviceStruct>? findDevicesOutput1;
+  // Stores action output result for [Custom Action - requestBluetoothOn] action in SplashPage widget.
+  bool? requestBluetoothOnOutput;
+  // Stores action output result for [Custom Action - getConnectedDevices] action in SplashPage widget.
+  List<BTDeviceStruct>? getConnectedDevicesOutput;
+  // Stores action output result for [Custom Action - findDevices] action in SplashPage widget.
+  List<BTDeviceStruct>? findDevicesOutput;
 
   @override
   void initState(BuildContext context) {}
